@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perē tai'o - Révision de lecture CP</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --accent: #16a34a;
+            --bg: #f8fafc;
+            --text: #1e293b;
+            --danger: #dc2626;
+            --current-bg-pastel: #eff6ff;
+            --current-border: #2563eb;
+        }
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Arial Rounded MT Bold', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        header {
+            width: 100%;
+            max-width: 740px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            padding: 0 4px;
+            box-sizing: border-box;
+        }
+        .header-titles {
+            text-align: left;
+        }
+        h1 {
+            color: #1e3a8a;
+            font-size: 1.5rem;
+            margin: 0;
+        }
+        p.subtitle {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin: 0;
+        }
+
+        .fullscreen-btn {
+            background: white;
+            border: 2px solid var(--current-border);
+            color: var(--current-border);
+            font-size: 1.3rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+            transition: transform 0.1s;
+        }
+        .fullscreen-btn:active { transform: scale(0.9); }
+
+        .app-container {
+            max-width: 740px;
+            width: 100%;
+            background-color: var(--current-bg-pastel);
+            border: 4px solid var(--current-border);
+            border-radius: 20px;
+            padding: 14px;
+            box-shadow: 0 10px 20px -3px rgba(0,0,0,0.08);
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        /* Grille des 11 chapitres Lecture Piano */
+        .chapters-grid {
+            display: grid;
+            grid-template-columns: repeat(11, 1fr);
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+        .chap-card {
+            border: none;
+            border-radius: 10px;
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: white;
+            height: 44px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.12);
+            transition: transform 0.15s;
+        }
+        .chap-card:active { transform: scale(0.92); }
+        .chap-card.active {
+            outline: 3px solid #0f172a;
+            outline-offset: 1px;
+            transform: scale(1.05);
+        }
+
+        .current-chapter-banner {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid var(--current-border);
+            padding: 5px 10px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: var(--current-border);
+            margin-bottom: 10px;
+        }
+
+        /* 6 étapes pictographiques */
+        .steps-nav {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+        .step-btn {
+            background-color: rgba(255, 255, 255, 0.9);
+            border: 2px solid var(--current-border);
+            color: var(--current-border);
+            padding: 8px 2px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            transition: all 0.15s;
+        }
+        .step-btn.active {
+            background-color: var(--current-border);
+            color: white;
+        }
+        .step-btn.disabled {
+            opacity: 0.35;
+            background-color: #e2e8f0;
+            border-color: #cbd5e1;
+            color: #94a3b8;
+            pointer-events: none;
+            cursor: not-allowed;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #334155;
+            background: rgba(255, 255, 255, 0.85);
+            border: 2px solid rgba(0,0,0,0.06);
+            padding: 6px 12px;
+            border-radius: 10px;
+        }
+
+        .exercise-box {
+            text-align: center;
+            padding: 20px 10px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.03);
+            min-height: 230px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        .audio-btn {
+            background: #eff6ff;
+            border: 3px solid var(--current-border);
+            color: var(--current-border);
+            font-size: 2.2rem;
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 14px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+            transition: transform 0.1s;
+        }
+        .audio-btn:active { transform: scale(0.9); }
+
+        .choices-container {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 6px;
+            width: 100%;
+        }
+        .choice-btn {
+            background: white;
+            border: 3px solid var(--current-border);
+            border-radius: 12px;
+            font-size: 1.7rem;
+            font-weight: bold;
+            padding: 10px 18px;
+            cursor: pointer;
+            min-width: 80px;
+            color: var(--current-border);
+            transition: transform 0.15s, background-color 0.15s;
+        }
+        .choice-btn:active { transform: scale(0.95); }
+        .choice-btn.wrong {
+            border-color: var(--danger);
+            color: var(--danger);
+            background-color: #fee2e2;
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        /* Style spécifique pour les duels d'oppositions (boutons plus imposants) */
+        .choice-btn.duel {
+            min-width: 120px;
+            padding: 16px 28px;
+            font-size: 2rem;
+        }
+
+        .builder-slot {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 58px;
+            width: 90%;
+            max-width: 360px;
+            background: #f8fafc;
+            border: 2px dashed #cbd5e1;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--current-border);
+            letter-spacing: 2px;
+        }
+        .unified-word-display {
+            background: #f0fdf4;
+            border: 3px solid var(--accent);
+            color: var(--accent);
+            padding: 6px 18px;
+            border-radius: 10px;
+            font-size: 2.1rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            display: inline-block;
+            animation: popIn 0.25s ease-out;
+        }
+        @keyframes popIn {
+            0% { transform: scale(0.85); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .syllable-chip {
+            background: white;
+            border: 2px solid var(--current-border);
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            color: var(--current-border);
+            transition: transform 0.1s;
+        }
+        .syllable-chip:active { transform: scale(0.9); }
+
+        .feedback {
+            margin-top: 8px;
+            font-size: 1.5rem;
+            min-height: 28px;
+            text-align: center;
+        }
+
+        .final-score-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        .stars-row {
+            display: flex;
+            gap: 8px;
+            font-size: 3rem;
+        }
+        .star-gold {
+            color: #f59e0b;
+            filter: drop-shadow(0 2px 4px rgba(245, 158, 11, 0.3));
+        }
+        .star-gray {
+            color: #cbd5e1;
+            opacity: 0.45;
+        }
+        .gommette {
+            font-size: 2.8rem;
+            animation: bounce 0.6s ease infinite alternate;
+        }
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-6px); }
+        }
+        .restart-btn {
+            background: var(--current-border);
+            color: white;
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 1.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            transition: transform 0.15s;
+            margin-top: 4px;
+        }
+        .restart-btn:active { transform: scale(0.9); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-titles">
+            <h1>Perē Tai'o</h1>
+            <p class="subtitle">Révision de lecture CP</p>
+        </div>
+        <button class="fullscreen-btn" onclick="toggleFullScreen()" title="Plein écran">⛶</button>
+    </header>
+
+    <div class="app-container" id="app-container">
+        <div class="chapters-grid" id="chapters-grid"></div>
+        <div class="current-chapter-banner" id="chap-banner"></div>
+
+        <!-- 6 étapes d'entraînement -->
+        <div class="steps-nav">
+            <button class="step-btn active" id="btn-step-1" onclick="setStep(1)">1 👁️</button>
+            <button class="step-btn" id="btn-step-2" onclick="setStep(2)">2 ✏️</button>
+            <button class="step-btn" id="btn-step-3" onclick="setStep(3)">3 📖</button>
+            <button class="step-btn" id="btn-step-4" onclick="setStep(4)">4 ✍️</button>
+            <button class="step-btn" id="btn-step-5" onclick="setStep(5)">5 💬</button>
+            <button class="step-btn" id="btn-step-6" onclick="setStep(6)">6 ⚖️</button>
+        </div>
+
+        <div class="stats-bar">
+            <span id="item-counter">🎯 1 / 20</span>
+            <div style="display:flex; gap: 14px;">
+                <span style="color:#16a34a;"><span id="correct-count">0</span> ✅</span>
+                <span style="color:#dc2626;"><span id="error-count">0</span> ❌</span>
+            </div>
+        </div>
+
+        <div class="exercise-box" id="exercise-box"></div>
+        <div class="feedback" id="feedback-msg"></div>
+    </div>
+
+    <script>
+        // Corpus complet avec paires d'oppositions ciblées
+        const chapters = [
+            { 
+                id: 1, name: "1 : a, e, i, o, u", color: "#2563eb", pastel: "#eff6ff", 
+                syllabes: ["a", "e", "i", "o", "u", "au", "ea", "ao"], 
+                mots: ["au", "ea", "ao", "oe", "ua", "ui"],
+                oppositions: [
+                    { target: "o", pair: ["o", "u"] },
+                    { target: "u", pair: ["o", "u"] },
+                    { target: "e", pair: ["e", "i"] },
+                    { target: "i", pair: ["e", "i"] },
+                    { target: "a", pair: ["a", "e"] },
+                    { target: "e", pair: ["a", "e"] }
+                ]
+            },
+            { 
+                id: 2, name: "2 : f", color: "#dc2626", pastel: "#fef2f2", 
+                syllabes: ["fa", "fe", "fi"], 
+                mots: ["fai", "fao", "fefe", "feo", "fifi", "fiu", "ofa", "ufa", "ufi"],
+                oppositions: null
+            },
+            { 
+                id: 3, name: "3 : ā, ē, ī, ō, ū", color: "#d97706", pastel: "#fffbeb", 
+                syllabes: ["ā", "ē", "ī", "ō", "ū", "fā", "fē", "fī"], 
+                mots: ["ā", "fā", "fāfā", "fē", "fēfē", "feiā", "ō", "ū"],
+                oppositions: [
+                    { target: "ā", pair: ["a", "ā"] },
+                    { target: "a", pair: ["a", "ā"] },
+                    { target: "ē", pair: ["e", "ē"] },
+                    { target: "e", pair: ["e", "ē"] },
+                    { target: "ī", pair: ["i", "ī"] },
+                    { target: "i", pair: ["i", "ī"] },
+                    { target: "ō", pair: ["o", "ō"] },
+                    { target: "o", pair: ["o", "ō"] },
+                    { target: "ū", pair: ["u", "ū"] },
+                    { target: "u", pair: ["u", "ū"] },
+                    { target: "fā", pair: ["fa", "fā"] },
+                    { target: "fa", pair: ["fa", "fā"] },
+                    { target: "fē", pair: ["fe", "fē"] },
+                    { target: "fe", pair: ["fe", "fē"] }
+                ]
+            },
+            { 
+                id: 4, name: "4 : m", color: "#a855f7", pastel: "#faf5ff", 
+                syllabes: ["ma", "me", "mi", "mo", "mu", "mā", "mē", "mī", "mō", "mū"], 
+                mots: ["ama", "amo", "mā", "maemae", "māio", "mama", "māmā", "mana", "mau", "mē", "mimi", "mīmī", "moa", "moe", "moemoeā", "moi", "mua", "ume", "umu"],
+                oppositions: null
+            },
+            { 
+                id: 5, name: "5 : r", color: "#ea580c", pastel: "#fff7ed", 
+                syllabes: ["ra", "re", "ri", "ro", "ru", "rā", "rē", "rī", "rō", "rū"], 
+                mots: ["ara", "fara", "fare", "marō", "meri", "miro", "ori", "rari", "rē", "remu", "reo", "rere", "rima", "rō", "roi", "rouru", "rū", "rua", "uira"],
+                oppositions: null
+            },
+            { 
+                id: 6, name: "6 : n", color: "#1e3a8a", pastel: "#f0f9ff", 
+                syllabes: ["na", "ne", "ni", "no", "nu", "nā", "nē", "nī", "nō", "nū"], 
+                mots: ["ana", "ānuanua", "fana", "inu", "manu", "menemene", "moni", "naero", "nānā", "naonao", "nini", "nira", "niuniu", "nono", "nui", "one", "oni", "ono", "rēni"],
+                oppositions: [
+                    { target: "na", pair: ["ma", "na"] },
+                    { target: "ma", pair: ["ma", "na"] },
+                    { target: "no", pair: ["mo", "no"] },
+                    { target: "mo", pair: ["mo", "no"] },
+                    { target: "ni", pair: ["mi", "ni"] },
+                    { target: "mi", pair: ["mi", "ni"] },
+                    { target: "ne", pair: ["me", "ne"] },
+                    { target: "me", pair: ["me", "ne"] },
+                    { target: "nu", pair: ["mu", "nu"] },
+                    { target: "mu", pair: ["mu", "nu"] }
+                ]
+            },
+            { 
+                id: 7, name: "7 : v", color: "#7c3aed", pastel: "#f5f3ff", 
+                syllabes: ["va", "ve", "vi", "vo", "vā", "vē", "vī", "vō"], 
+                mots: ["fīva", "iva", "rava", "reva", "vai", "vana", "varo", "vau", "vāvā", "vāvāhi", "veoveo", "veravera", "veri", "vero", "vī", "vine", "vini", "vīvī", "vivo"],
+                oppositions: [
+                    { target: "va", pair: ["fa", "va"] },
+                    { target: "fa", pair: ["fa", "va"] },
+                    { target: "ve", pair: ["fe", "ve"] },
+                    { target: "fe", pair: ["fe", "ve"] },
+                    { target: "vi", pair: ["fi", "vi"] },
+                    { target: "fi", pair: ["fi", "vi"] },
+                    { target: "vā", pair: ["fā", "vā"] },
+                    { target: "fā", pair: ["fā", "vā"] }
+                ]
+            },
+            { 
+                id: 8, name: "8 : h", color: "#4b5563", pastel: "#f3f4f6", 
+                syllabes: ["ha", "he", "hi", "ho", "hu", "hā", "hē", "hī", "hō", "hū"], 
+                mots: ["hāmani", "haru", "hē", "heiva", "here", "hīmene", "hinu", "hoe", "honu", "horo", "huero", "hura", "huruhuru", "maha", "mahae", "mahana", "rehu", "rohirohi", "vaha"],
+                oppositions: [
+                    { target: "ha", pair: ["a", "ha"] },
+                    { target: "a",  pair: ["a", "ha"] },
+                    { target: "he", pair: ["e", "he"] },
+                    { target: "e",  pair: ["e", "he"] },
+                    { target: "ho", pair: ["o", "ho"] },
+                    { target: "o",  pair: ["o", "ho"] },
+                    { target: "hu", pair: ["u", "hu"] },
+                    { target: "u",  pair: ["u", "hu"] },
+                    { target: "hi", pair: ["i", "hi"] },
+                    { target: "i",  pair: ["i", "hi"] }
+                ]
+            },
+            { 
+                id: 9, name: "9 : 'eta", color: "#059669", pastel: "#ecfdf5", 
+                syllabes: ["'a", "'e", "'i", "'o", "'u", "'ā", "'ē", "'ī", "'ō", "'ū"], 
+                mots: ["'amu", "'are", "'āva'e", "'āvae", "'ere'ere", "'iri", "'ōfī", "'ori", "'uo'uo", "'ūrī", "fe'e", "i'a", "mā'a", "ma'i", "mo'o", "ra'i", "re'are'a", "ro'i", "va'a"],
+                oppositions: [
+                    { target: "'a", pair: ["a", "'a"] },
+                    { target: "a",  pair: ["a", "'a"] },
+                    { target: "'e", pair: ["e", "'e"] },
+                    { target: "e",  pair: ["e", "'e"] },
+                    { target: "'i", pair: ["i", "'i"] },
+                    { target: "i",  pair: ["i", "'i"] },
+                    { target: "'o", pair: ["o", "'o"] },
+                    { target: "o",  pair: ["o", "'o"] },
+                    { target: "'u", pair: ["u", "'u"] },
+                    { target: "u",  pair: ["u", "'u"] },
+                    { target: "'a", pair: ["ha", "'a"] },
+                    { target: "ha", pair: ["ha", "'a"] },
+                    { target: "'e", pair: ["he", "'e"] },
+                    { target: "he", pair: ["he", "'e"] }
+                ]
+            },
+            { 
+                id: 10, name: "10 : p", color: "#65a30d", pastel: "#f7fee7", 
+                syllabes: ["pa", "pe", "pi", "po", "pu", "pā", "pē", "pī", "pō", "pū"], 
+                mots: ["pāfa'i", "pahi", "pahu", "pārahi", "pāreu", "pāruru", "pē", "pepe", "pēpē", "pere'o'o", "pī", "pīahi", "piha", "pō", "pōiri", "pū", "pu'a", "pua", "pua'a"],
+                oppositions: null
+            },
+            { 
+                id: 11, name: "11 : t", color: "#0891b2", pastel: "#ecfeff", 
+                syllabes: ["ta", "te", "ti", "to", "tu", "tā", "tē", "tī", "tō", "tū"], 
+                mots: ["fa'atete", "mata", "mata'i", "poto", "ta'i", "ta'oto", "tamari'i", "tāpū", "tari'a", "taura", "tīfaifai", "tiare", "tipi", "tōtara", "tu'a", "tu'e", "tua", "tumu rā'au", "tupa"],
+                oppositions: [
+                    { target: "pa", pair: ["pa", "ta"] },
+                    { target: "ta", pair: ["pa", "ta"] },
+                    { target: "pe", pair: ["pe", "te"] },
+                    { target: "te", pair: ["pe", "te"] },
+                    { target: "pi", pair: ["pi", "ti"] },
+                    { target: "ti", pair: ["pi", "ti"] },
+                    { target: "po", pair: ["po", "to"] },
+                    { target: "to", pair: ["po", "to"] },
+                    { target: "pu", pair: ["pu", "tu"] },
+                    { target: "tu", pair: ["pu", "tu"] }
+                ]
+            }
+        ];
+
+        let currentChapterIndex = 0;
+        let currentStep = 1;
+        let currentItemIndex = 0;
+        let totalItems = 20;
+        let correctCount = 0;
+        let errorsCount = 0;
+        let currentTarget = "";
+        let currentChoices = [];
+        let currentBuiltWord = "";
+        let targetLettersLength = 0;
+        let hasFailedCurrentItem = false;
+
+        function initChaptersGrid() {
+            const grid = document.getElementById('chapters-grid');
+            grid.innerHTML = '';
+            chapters.forEach((chap, idx) => {
+                const btn = document.createElement('button');
+                btn.className = `chap-card ${idx === currentChapterIndex ? 'active' : ''}`;
+                btn.style.backgroundColor = chap.color;
+                btn.textContent = idx + 1;
+                btn.addEventListener('click', () => {
+    currentChapterIndex = idx;
+    updateTheme(chap);
+    checkOppositionsAvailability();
+    resetSession();
+    initChaptersGrid();
+    preloadCurrentChapterAudio(); // <--- AJOUTER ICI
+    loadNewItem();
+});
+                grid.appendChild(btn);
+            });
+            document.getElementById('chap-banner').textContent = `Chapitre ${chapters[currentChapterIndex].name}`;
+        }
+
+        function updateTheme(chap) {
+            document.documentElement.style.setProperty('--current-bg-pastel', chap.pastel);
+            document.documentElement.style.setProperty('--current-border', chap.color);
+            document.getElementById('chap-banner').textContent = `Chapitre ${chap.name}`;
+        }
+
+        function checkOppositionsAvailability() {
+            const chap = chapters[currentChapterIndex];
+            const btnStep6 = document.getElementById('btn-step-6');
+            if (!chap.oppositions || chap.oppositions.length === 0) {
+                btnStep6.classList.add('disabled');
+                if (currentStep === 6) setStep(1);
+            } else {
+                btnStep6.classList.remove('disabled');
+            }
+        }
+
+        function setStep(step) {
+            currentStep = step;
+            for (let i = 1; i <= 6; i++) {
+                const b = document.getElementById(`btn-step-${i}`);
+                if (b) b.classList.toggle('active', i === step);
+            }
+            
+            if (step === 1 || step === 3) totalItems = 20;
+            else if (step === 2 || step === 4 || step === 6) totalItems = 10;
+            else if (step === 5) totalItems = 5;
+
+            resetSession();
+            loadNewItem();
+        }
+
+        function resetSession() {
+            currentItemIndex = 0;
+            correctCount = 0;
+            errorsCount = 0;
+            hasFailedCurrentItem = false;
+            updateStats();
+        }
+
+        function updateStats() {
+            // Plafonne à totalItems pour ne pas afficher "21 / 20"
+            const displayIndex = Math.min(currentItemIndex + 1, totalItems);
+            document.getElementById('item-counter').textContent = `🎯 ${displayIndex} / ${totalItems}`;
+            document.getElementById('correct-count').textContent = correctCount;
+            document.getElementById('error-count').textContent = errorsCount;
+        }
+
+        function getDedicatedCorpus() {
+            const chap = chapters[currentChapterIndex];
+            const isSyllable = (currentStep === 1 || currentStep === 2);
+            return isSyllable ? chap.syllabes : chap.mots;
+        }
+
+        function getCumulativePool() {
+            let pool = [];
+            const isSyllable = (currentStep === 1 || currentStep === 2);
+            for (let i = 0; i <= currentChapterIndex; i++) {
+                const list = isSyllable ? chapters[i].syllabes : chapters[i].mots;
+                if (list) pool.push(...list);
+            }
+            return [...new Set(pool)];
+        }
+
+        function loadNewItem() {
+            if (currentStep === 5) {
+                document.getElementById('exercise-box').innerHTML = `
+                    <div style="font-size: 3rem; margin-bottom: 6px;">⏳</div>
+                    <div style="font-size: 1.1rem; color: #64748b; font-weight: bold;">(5 💬 - Phrases bientôt disponibles)</div>
+                `;
+                document.getElementById('feedback-msg').textContent = '';
+                return;
+            }
+
+            if (currentItemIndex >= totalItems) {
+                renderFinalScore();
+                return;
+            }
+
+            hasFailedCurrentItem = false;
+            document.getElementById('feedback-msg').textContent = '';
+
+            if (currentStep === 6) {
+                // Exercice d'opposition binaire (Paires)
+                const chap = chapters[currentChapterIndex];
+                const list = chap.oppositions;
+                const selectedOpposition = list[Math.floor(Math.random() * list.length)];
+                currentTarget = selectedOpposition.target;
+                currentChoices = [...selectedOpposition.pair].sort(() => Math.random() - 0.5);
+                renderOppositionBox();
+            } else if (currentStep === 1 || currentStep === 3) {
+                // Lecture (QCM 4 choix)
+                const dedicatedList = getDedicatedCorpus();
+                currentTarget = dedicatedList[Math.floor(Math.random() * dedicatedList.length)];
+                const pool = getCumulativePool();
+                let availableDistractors = pool.filter(w => w !== currentTarget);
+                let numChoices = 4;
+                let distractors = availableDistractors.sort(() => Math.random() - 0.5).slice(0, numChoices - 1);
+                currentChoices = [currentTarget, ...distractors].sort(() => Math.random() - 0.5);
+                renderReadingBox();
+            } else {
+                // Écriture / Dictée
+                const dedicatedList = getDedicatedCorpus();
+                currentTarget = dedicatedList[Math.floor(Math.random() * dedicatedList.length)];
+                renderBuilderBox();
+            }
+            updateStats();
+        }
+
+        function renderReadingBox() {
+            const box = document.getElementById('exercise-box');
+            box.innerHTML = `
+                <button class="audio-btn" id="audio-play-btn">🔊</button>
+                <div class="choices-container" id="choices-box"></div>
+            `;
+            document.getElementById('audio-play-btn').addEventListener('click', () => playAudio(currentTarget));
+
+            const container = document.getElementById('choices-box');
+            currentChoices.forEach(choice => {
+                const btn = document.createElement('button');
+                btn.className = 'choice-btn';
+                btn.textContent = choice;
+                btn.addEventListener('click', () => handleChoiceClick(btn, choice));
+                container.appendChild(btn);
+            });
+        }
+
+        function renderOppositionBox() {
+            const box = document.getElementById('exercise-box');
+            box.innerHTML = `
+                <button class="audio-btn" id="audio-play-btn">🔊</button>
+                <div class="choices-container" id="choices-box"></div>
+            `;
+            document.getElementById('audio-play-btn').addEventListener('click', () => playAudio(currentTarget));
+
+            const container = document.getElementById('choices-box');
+            currentChoices.forEach(choice => {
+                const btn = document.createElement('button');
+                btn.className = 'choice-btn duel';
+                btn.textContent = choice;
+                btn.addEventListener('click', () => handleChoiceClick(btn, choice));
+                container.appendChild(btn);
+            });
+        }
+
+        function handleChoiceClick(buttonElement, selected) {
+            const msg = document.getElementById('feedback-msg');
+            if (selected.trim() === currentTarget.trim()) {
+                msg.textContent = "✨ 🎉";
+                if (!hasFailedCurrentItem) correctCount++;
+                currentItemIndex++;
+                updateStats(); // <--- Prise en compte immédiate
+                setTimeout(loadNewItem, 650);
+            } else {
+                buttonElement.classList.add('wrong');
+                msg.textContent = "❌ 👂";
+                if (!hasFailedCurrentItem) {
+                    errorsCount++;
+                    hasFailedCurrentItem = true;
+                    updateStats();
+                }
+            }
+        }
+
+        function renderBuilderBox() {
+            currentBuiltWord = "";
+            let letters = currentTarget.split('');
+            targetLettersLength = letters.length;
+            let shuffledLetters = [...letters].sort(() => Math.random() - 0.5);
+
+            const box = document.getElementById('exercise-box');
+            box.innerHTML = `
+                <button class="audio-btn" id="audio-play-btn">🔊</button>
+                <div class="builder-slot" id="slot-container"></div>
+                <div class="choices-container" id="chips-container"></div>
+            `;
+            document.getElementById('audio-play-btn').addEventListener('click', () => playAudio(currentTarget));
+
+            const chipsContainer = document.getElementById('chips-container');
+            shuffledLetters.forEach(l => {
+                const chip = document.createElement('button');
+                chip.className = 'syllable-chip';
+                chip.textContent = l;
+                chip.addEventListener('click', () => selectChip(chip, l));
+                chipsContainer.appendChild(chip);
+            });
+        }
+
+        function selectChip(element, letter) {
+            currentBuiltWord += letter;
+            element.style.display = 'none';
+
+            const slot = document.getElementById('slot-container');
+            slot.textContent = currentBuiltWord;
+
+            if (currentBuiltWord.length === targetLettersLength) {
+                slot.innerHTML = `<div class="unified-word-display">${currentBuiltWord}</div>`;
+                document.querySelectorAll('.syllable-chip').forEach(c => c.style.pointerEvents = 'none');
+                
+                setTimeout(() => {
+                    checkBuiltWord();
+                }, 600);
+            }
+        }
+
+        function checkBuiltWord() {
+            const msg = document.getElementById('feedback-msg');
+            if (currentBuiltWord.trim() === currentTarget.trim()) {
+                msg.textContent = "✨ 🎉";
+                if (!hasFailedCurrentItem) correctCount++;
+                currentItemIndex++;
+                updateStats(); // <--- Prise en compte immédiate
+                setTimeout(loadNewItem, 650);
+            } else {
+                msg.textContent = "❌ 👂";
+                if (!hasFailedCurrentItem) {
+                    errorsCount++;
+                    hasFailedCurrentItem = true;
+                    updateStats();
+                }
+                setTimeout(renderBuilderBox, 850);
+            }
+        }
+
+        function renderFinalScore() {
+            const ratio = correctCount / totalItems;
+            let starsHtml = "";
+            let showMedal = false;
+
+            if (errorsCount === 0) {
+                starsHtml = `
+                    <span class="star-gold">★</span>
+                    <span class="star-gold">★</span>
+                    <span class="star-gold">★</span>
+                `;
+                showMedal = true;
+            } else if (ratio >= 2/3) {
+                if (errorsCount <= 2) {
+                    starsHtml = `
+                        <span class="star-gold">★</span>
+                        <span class="star-gold">★</span>
+                        <span class="star-gray">★</span>
+                    `;
+                } else {
+                    starsHtml = `
+                        <span class="star-gold">★</span>
+                        <span class="star-gray">★</span>
+                        <span class="star-gray">★</span>
+                    `;
+                }
+            } else {
+                starsHtml = `
+                    <span class="star-gray">★</span>
+                    <span class="star-gray">★</span>
+                    <span class="star-gray">★</span>
+                `;
+            }
+
+            document.getElementById('feedback-msg').textContent = '';
+            document.getElementById('exercise-box').innerHTML = `
+                <div class="final-score-box">
+                    <div class="stars-row">${starsHtml}</div>
+                    ${showMedal ? '<div class="gommette">🏅</div>' : ''}
+                    <button class="restart-btn" id="restart-session-btn">🔁</button>
+                </div>
+            `;
+            document.getElementById('restart-session-btn').addEventListener('click', () => {
+                resetSession();
+                loadNewItem();
+            });
+        }
+
+        // Instance audio unique réutilisée (évite les instanciations répétées)
+        const globalAudioPlayer = new Audio();
+        const audioPreloadCache = {};
+
+        function getAudioFilename(word) {
+            let clean = word.toLowerCase().trim();
+            clean = clean.replace(/ā/g, 'aa')
+                         .replace(/ē/g, 'ee')
+                         .replace(/ī/g, 'ii')
+                         .replace(/ō/g, 'oo')
+                         .replace(/ū/g, 'uu');
+            clean = clean.replace(/'/g, '_').replace(/ /g, '_');
+            return `audio/${clean}.mp3`;
+        }
+
+        // Précharge en arrière-plan tous les sons du chapitre actif
+        function preloadCurrentChapterAudio() {
+            const chap = chapters[currentChapterIndex];
+            const allItems = [...(chap.syllabes || []), ...(chap.mots || [])];
+
+            if (chap.oppositions) {
+                chap.oppositions.forEach(o => {
+                    allItems.push(o.target);
+                    allItems.push(...o.pair);
+                });
+            }
+
+            // Déduplication et chargement silencieux dans le cache navigateur
+            [...new Set(allItems)].forEach(word => {
+                const url = getAudioFilename(word);
+                if (!audioPreloadCache[url]) {
+                    const preloadObj = new Audio();
+                    preloadObj.src = url;
+                    preloadObj.preload = "auto";
+                    audioPreloadCache[url] = preloadObj;
+                }
+            });
+        }
+
+        function playAudio(word) {
+            const filePath = getAudioFilename(word);
+
+            // Stoppe toute lecture en cours pour éviter les chevauchements
+            globalAudioPlayer.pause();
+            globalAudioPlayer.currentTime = 0;
+
+            globalAudioPlayer.src = filePath;
+
+            const playPromise = globalAudioPlayer.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(err => {
+                    console.warn("Fichier audio non trouvé ou bloqué :", filePath);
+                });
+            }
+        }
+
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.warn("Plein écran non supporté :", err);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        initChaptersGrid();
+updateTheme(chapters[0]);
+checkOppositionsAvailability();
+preloadCurrentChapterAudio(); // <--- AJOUTER ICI
+loadNewItem();
+    </script>
+</body>
+</html>
