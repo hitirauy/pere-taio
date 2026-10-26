@@ -229,14 +229,14 @@
             pointer-events: none;
         }
 
-        /* Cartes spécifiques pour la lecture de phrases */
+        /* Cartes pour la lecture de phrases */
         .choice-btn.phrase-btn {
-            min-width: 200px;
+            min-width: 220px;
             padding: 12px 22px;
-            font-size: 1.6rem;
+            font-size: 1.5rem;
         }
 
-        /* Style spécifique pour les oppositions */
+        /* Cartes pour les oppositions */
         .choice-btn.duel {
             min-width: 120px;
             padding: 16px 28px;
@@ -249,7 +249,7 @@
             align-items: center;
             min-height: 58px;
             width: 90%;
-            max-width: 440px;
+            max-width: 500px;
             background: #f8fafc;
             border: 2px dashed #cbd5e1;
             border-radius: 12px;
@@ -259,7 +259,8 @@
             color: var(--current-border);
             padding: 6px 12px;
             box-sizing: border-box;
-            gap: 10px;
+            gap: 8px;
+            flex-wrap: wrap;
         }
         .unified-word-display {
             background: #f0fdf4;
@@ -267,7 +268,7 @@
             color: var(--accent);
             padding: 6px 18px;
             border-radius: 10px;
-            font-size: 2rem;
+            font-size: 1.9rem;
             font-weight: bold;
             display: inline-block;
             animation: popIn 0.25s ease-out;
@@ -363,7 +364,7 @@
         <div class="chapters-grid" id="chapters-grid"></div>
         <div class="current-chapter-banner" id="chap-banner"></div>
 
-        <!-- 7 étapes d'entraînement -->
+        <!-- 7 étapes d'apprentissage -->
         <div class="steps-nav">
             <button class="step-btn active" id="btn-step-1" onclick="setStep(1)" title="Lecture de syllabes">1 👁️</button>
             <button class="step-btn" id="btn-step-2" onclick="setStep(2)" title="Écriture de syllabes">2 ✏️</button>
@@ -387,11 +388,10 @@
     </div>
 
     <script>
-
         const chapters = [
-            {
-                id: 1, name: "1 : a, e, i, o, u", color: "#2563eb", pastel: "#eff6ff",
-                syllabes: ["a", "e", "i", "o", "u", "au", "ea", "ao"],
+            { 
+                id: 1, name: "1 : a, e, i, o, u", color: "#2563eb", pastel: "#eff6ff", 
+                syllabes: ["a", "e", "i", "o", "u", "au", "ea", "ao"], 
                 mots: ["au", "ea", "ao", "oe", "ua", "ui"],
                 phrases: [
                     "E ao.",
@@ -412,9 +412,9 @@
                     { target: "e", pair: ["a", "e"] }
                 ]
             },
-            {
-                id: 2, name: "2 : f", color: "#dc2626", pastel: "#fef2f2",
-                syllabes: ["fa", "fe", "fi"],
+            { 
+                id: 2, name: "2 : f", color: "#dc2626", pastel: "#fef2f2", 
+                syllabes: ["fa", "fe", "fi"], 
                 mots: ["fai", "fao", "fefe", "feo", "fifi", "fiu", "ofa", "ufa", "ufi"],
                 phrases: [
                     "E fai.",
@@ -428,9 +428,9 @@
                 ],
                 oppositions: null
             },
-            {
-                id: 3, name: "3 : ā, ē, ī, ō, ū", color: "#d97706", pastel: "#fffbeb",
-                syllabes: ["ā", "ē", "ī", "ō", "ū", "fā", "fē", "fī"],
+            { 
+                id: 3, name: "3 : ā, ē, ī, ō, ū", color: "#d97706", pastel: "#fffbeb", 
+                syllabes: ["ā", "ē", "ī", "ō", "ū", "fā", "fē", "fī"], 
                 mots: ["ā", "fā", "fāfā", "fē", "fēfē", "feiā", "ō", "ū"],
                 phrases: [
                     "E fāfā.",
@@ -438,7 +438,7 @@
                     "E feiā.",
                     "E fā.",
                     "E fē.",
-                    "[']Ua fā.",
+                    "[']Ua fā mai.",
                     "[']Ua ō.",
                     "[']Ua ū."
                 ],
@@ -459,34 +459,52 @@
                     { target: "fe", pair: ["fe", "fē"] }
                 ]
             },
-            {
-                id: 4, name: "4 : m", color: "#a855f7", pastel: "#faf5ff",
-                syllabes: ["ma", "me", "mi", "mo", "mu", "mā", "mē", "mī", "mō", "mū"],
+            { 
+                id: 4, name: "4 : m", color: "#a855f7", pastel: "#faf5ff", 
+                syllabes: ["ma", "me", "mi", "mo", "mu", "mā", "mē", "mī", "mō", "mū"], 
                 mots: ["ama", "amo", "mā", "maemae", "māio", "mama", "māmā", "mana", "mau", "mē", "mimi", "mīmī", "moa", "moe", "moemoeā", "moi", "mua", "ume", "umu"],
                 phrases: [
-                    "E mea maemae.",
                     "E mea māmā.",
-                    "E mea fefe.",
                     "E mea fiu.",
-                    "E moa.",
-                    "E mīmī.",
+                    "E moa ufa.",
+                    "E mīmī ufa.",
+                    "E mea fefe.",
+                    "[']Ua maemae.",
                     "[']Ua moe.",
                     "[']Ua mau."
                 ],
                 oppositions: null
             },
-            {
-                id: 5, name: "5 : r", color: "#ea580c", pastel: "#fff7ed",
-                syllabes: ["ra", "re", "ri", "ro", "ru", "rā", "rē", "rī", "rō", "rū"],
+            { 
+                id: 5, name: "5 : r", color: "#ea580c", pastel: "#fff7ed", 
+                syllabes: ["ra", "re", "ri", "ro", "ru", "rā", "rē", "rī", "rō", "rū"], 
                 mots: ["ara", "fara", "fare", "marō", "meri", "miro", "ori", "rari", "rē", "remu", "reo", "rere", "rima", "rō", "roi", "rouru", "rū", "rua", "uira"],
-                phrases: null,
+                phrases: [
+                    "E rere rāua.",
+                    "[']Ua rere rāua.",
+                    "E moe rāua iō Maima.",
+                    "[']Ua moe rāua iō Moea.",
+                    "[']Ua ara rāua iō Miri mā.",
+                    "[']Ua rū rāua.",
+                    "E mea marō roa.",
+                    "E mea rari roa."
+                ],
                 oppositions: null
             },
-            {
-                id: 6, name: "6 : n", color: "#1e3a8a", pastel: "#f0f9ff",
-                syllabes: ["na", "ne", "ni", "no", "nu", "nā", "nē", "nī", "nō", "nū"],
+            { 
+                id: 6, name: "6 : n", color: "#1e3a8a", pastel: "#f0f9ff", 
+                syllabes: ["na", "ne", "ni", "no", "nu", "nā", "nē", "nī", "nō", "nū"], 
                 mots: ["ana", "ānuanua", "fana", "inu", "manu", "menemene", "moni", "naero", "nānā", "naonao", "nini", "nira", "niuniu", "nono", "nui", "one", "oni", "ono", "rēni"],
-                phrases: null,
+                phrases: [
+                    "E moe nā mīmī oni.",
+                    "[']Ua ora e ono manu.",
+                    "E naonao menemene roa !",
+                    "[']Ua nānā rāua [']iāna.",
+                    "E ori noa rāua.",
+                    "[']Ua moni roa !",
+                    "E fare nui.",
+                    "E ānuanua."
+                ],
                 oppositions: [
                     { target: "na", pair: ["ma", "na"] },
                     { target: "ma", pair: ["ma", "na"] },
@@ -500,9 +518,9 @@
                     { target: "mu", pair: ["mu", "nu"] }
                 ]
             },
-            {
-                id: 7, name: "7 : v", color: "#7c3aed", pastel: "#f5f3ff",
-                syllabes: ["va", "ve", "vi", "vo", "vā", "vē", "vī", "vō"],
+            { 
+                id: 7, name: "7 : v", color: "#7c3aed", pastel: "#f5f3ff", 
+                syllabes: ["va", "ve", "vi", "vo", "vā", "vē", "vī", "vō"], 
                 mots: ["fīva", "iva", "rava", "reva", "vai", "vana", "varo", "vau", "vāvā", "vāvāhi", "veoveo", "veravera", "veri", "vero", "vī", "vine", "vini", "vīvī", "vivo"],
                 phrases: null,
                 oppositions: [
@@ -516,9 +534,9 @@
                     { target: "fā", pair: ["fā", "vā"] }
                 ]
             },
-            {
-                id: 8, name: "8 : h", color: "#4b5563", pastel: "#f3f4f6",
-                syllabes: ["ha", "he", "hi", "ho", "hu", "hā", "hē", "hī", "hō", "hū"],
+            { 
+                id: 8, name: "8 : h", color: "#4b5563", pastel: "#f3f4f6", 
+                syllabes: ["ha", "he", "hi", "ho", "hu", "hā", "hē", "hī", "hō", "hū"], 
                 mots: ["hāmani", "haru", "hē", "heiva", "here", "hīmene", "hinu", "hoe", "honu", "horo", "huero", "hura", "huruhuru", "maha", "mahae", "mahana", "rehu", "rohirohi", "vaha"],
                 phrases: null,
                 oppositions: [
@@ -534,9 +552,9 @@
                     { target: "i",  pair: ["i", "hi"] }
                 ]
             },
-            {
-                id: 9, name: "9 : 'eta", color: "#059669", pastel: "#ecfdf5",
-                syllabes: ["'a", "'e", "'i", "'o", "'u", "'ā", "'ē", "'ī", "'ō", "'ū"],
+            { 
+                id: 9, name: "9 : 'eta", color: "#059669", pastel: "#ecfdf5", 
+                syllabes: ["'a", "'e", "'i", "'o", "'u", "'ā", "'ē", "'ī", "'ō", "'ū"], 
                 mots: ["'amu", "'are", "'āva'e", "'āvae", "'ere'ere", "'iri", "'ōfī", "'ori", "'uo'uo", "'ūrī", "fe'e", "i'a", "mā'a", "ma'i", "mo'o", "ra'i", "re'are'a", "ro'i", "va'a"],
                 phrases: null,
                 oppositions: [
@@ -556,16 +574,16 @@
                     { target: "he", pair: ["he", "'e"] }
                 ]
             },
-            {
-                id: 10, name: "10 : p", color: "#65a30d", pastel: "#f7fee7",
-                syllabes: ["pa", "pe", "pi", "po", "pu", "pā", "pē", "pī", "pō", "pū"],
+            { 
+                id: 10, name: "10 : p", color: "#65a30d", pastel: "#f7fee7", 
+                syllabes: ["pa", "pe", "pi", "po", "pu", "pā", "pē", "pī", "pō", "pū"], 
                 mots: ["pāfa'i", "pahi", "pahu", "pārahi", "pāreu", "pāruru", "pē", "pepe", "pēpē", "pere'o'o", "pī", "pīahi", "piha", "pō", "pōiri", "pū", "pu'a", "pua", "pua'a"],
                 phrases: null,
                 oppositions: null
             },
-            {
-                id: 11, name: "11 : t", color: "#0891b2", pastel: "#ecfeff",
-                syllabes: ["ta", "te", "ti", "to", "tu", "tā", "tē", "tī", "tō", "tū"],
+            { 
+                id: 11, name: "11 : t", color: "#0891b2", pastel: "#ecfeff", 
+                syllabes: ["ta", "te", "ti", "to", "tu", "tā", "tē", "tī", "tō", "tū"], 
                 mots: ["fa'atete", "mata", "mata'i", "poto", "ta'i", "ta'oto", "tamari'i", "tāpū", "tari'a", "taura", "tīfaifai", "tiare", "tipi", "tōtara", "tu'a", "tu'e", "tua", "tumu rā'au", "tupa"],
                 phrases: null,
                 oppositions: [
@@ -596,37 +614,39 @@
         let targetLength = 0;
         let hasFailedCurrentItem = false;
 
+        // Pioche sans remise pour éviter les répétitions
+        let sessionDeck = [];
+
         let currentPlayingAudio = null;
         const audioPreloadCache = {};
 
-        // Transforme les crochets en balises HTML grisées
         function formatDisplay(text) {
-            return text.replace(/\[(.*?)\]/g, '<span class="silent-char">$1</span>');
+            let res = text.replace(/\[(.*?)\]/g, '<span class="silent-char">$1</span>');
+            // Garantit une espace insécable parfaite devant la ponctuation haute
+            return res.replace(/[\s\u00A0]*([!?:;])/g, '&nbsp;$1');
         }
 
-        // Nettoie l'élément pour cibler son fichier MP3
-       function getAudioFilename(item) {
-    let clean = item.toLowerCase().trim();
-    clean = clean.replace(/\[|\]/g, '');       // Retire les crochets de masquage
-    clean = clean.replace(/[.,?!]/g, '');      // Retire la ponctuation
-    clean = clean.replace(/ā/g, 'aa')
-                 .replace(/ē/g, 'ee')
-                 .replace(/ī/g, 'ii')
-                 .replace(/ō/g, 'oo')
-                 .replace(/ū/g, 'uu');
-    // Convertit apostrophes et espaces en _, puis fusionne les __ consécutifs
-    clean = clean.replace(/['’ʻ\s]+/g, '_');
-    return `audio/${clean}.mp3`;
-}
+        function getAudioFilename(item) {
+            let clean = item.toLowerCase().trim();
+            clean = clean.replace(/\[|\]/g, '');
+            clean = clean.replace(/\s*[.,?!]/g, '');
+            clean = clean.replace(/ā/g, 'aa')
+                         .replace(/ē/g, 'ee')
+                         .replace(/ī/g, 'ii')
+                         .replace(/ō/g, 'oo')
+                         .replace(/ū/g, 'uu');
+            clean = clean.replace(/['’ʻ\s]+/g, '_');
+            return `audio/${clean}.mp3`;
+        }
 
         function preloadCurrentChapterAudio() {
             const chap = chapters[currentChapterIndex];
             const allItems = [
-                ...(chap.syllabes || []),
+                ...(chap.syllabes || []), 
                 ...(chap.mots || []),
                 ...(chap.phrases || [])
             ];
-
+            
             if (chap.oppositions) {
                 chap.oppositions.forEach(o => {
                     allItems.push(o.target);
@@ -662,7 +682,7 @@
 
             currentPlayingAudio = audio;
             audio.currentTime = 0;
-
+            
             const playPromise = audio.play();
             if (playPromise !== undefined) {
                 playPromise.catch(err => {
@@ -722,7 +742,7 @@
                 const b = document.getElementById(`btn-step-${i}`);
                 if (b) b.classList.toggle('active', i === step);
             }
-
+            
             if (step === 1 || step === 3) totalItems = 20;
             else if (step === 2 || step === 4 || step === 7) totalItems = 10;
             else if (step === 5 || step === 6) totalItems = 5;
@@ -736,6 +756,7 @@
             correctCount = 0;
             errorsCount = 0;
             hasFailedCurrentItem = false;
+            sessionDeck = []; // Réinitialise la pioche
             updateStats();
         }
 
@@ -764,6 +785,20 @@
             return [...new Set(pool)];
         }
 
+        // Pioche sans remise pour garantir une rotation parfaite
+        function drawNextItem() {
+            if (sessionDeck.length === 0) {
+                let base = [];
+                if (currentStep === 7) {
+                    base = [...chapters[currentChapterIndex].oppositions];
+                } else {
+                    base = [...getDedicatedCorpus()];
+                }
+                sessionDeck = [...base].sort(() => Math.random() - 0.5);
+            }
+            return sessionDeck.pop();
+        }
+
         function loadNewItem() {
             if (currentItemIndex >= totalItems) {
                 renderFinalScore();
@@ -774,38 +809,28 @@
             document.getElementById('feedback-msg').textContent = '';
 
             if (currentStep === 7) {
-                // Étape 7 : Oppositions binaires
-                const chap = chapters[currentChapterIndex];
-                const list = chap.oppositions;
-                const selectedOpposition = list[Math.floor(Math.random() * list.length)];
+                const selectedOpposition = drawNextItem();
                 currentTarget = selectedOpposition.target;
                 currentChoices = [...selectedOpposition.pair].sort(() => Math.random() - 0.5);
                 renderOppositionBox();
             } else if (currentStep === 1 || currentStep === 3) {
-                // Étapes 1 & 3 : QCM Syllabes / Mots
-                const dedicatedList = getDedicatedCorpus();
-                currentTarget = dedicatedList[Math.floor(Math.random() * dedicatedList.length)];
+                currentTarget = drawNextItem();
                 const pool = getCumulativePool();
                 let availableDistractors = pool.filter(w => w !== currentTarget);
                 let distractors = availableDistractors.sort(() => Math.random() - 0.5).slice(0, 3);
                 currentChoices = [currentTarget, ...distractors].sort(() => Math.random() - 0.5);
                 renderReadingBox();
             } else if (currentStep === 5) {
-                // Étape 5 : Lecture de phrases (QCM 3 choix)
+                currentTarget = drawNextItem();
                 const phrasesList = getDedicatedCorpus();
-                currentTarget = phrasesList[Math.floor(Math.random() * phrasesList.length)];
                 let distractors = phrasesList.filter(p => p !== currentTarget).sort(() => Math.random() - 0.5).slice(0, 2);
                 currentChoices = [currentTarget, ...distractors].sort(() => Math.random() - 0.5);
                 renderPhraseReadingBox();
             } else if (currentStep === 6) {
-                // Étape 6 : Écriture de phrases (reconstitution par étiquettes-mots)
-                const phrasesList = getDedicatedCorpus();
-                currentTarget = phrasesList[Math.floor(Math.random() * phrasesList.length)];
+                currentTarget = drawNextItem();
                 renderPhraseBuilderBox();
             } else {
-                // Étapes 2 & 4 : Écriture de syllabes / mots
-                const dedicatedList = getDedicatedCorpus();
-                currentTarget = dedicatedList[Math.floor(Math.random() * dedicatedList.length)];
+                currentTarget = drawNextItem();
                 renderWordBuilderBox();
             }
             updateStats();
@@ -918,7 +943,7 @@
             if (currentBuiltWord.length === targetLength) {
                 slot.innerHTML = `<div class="unified-word-display">${currentBuiltWord}</div>`;
                 document.querySelectorAll('.syllable-chip').forEach(c => c.style.pointerEvents = 'none');
-
+                
                 setTimeout(() => {
                     checkBuiltWord();
                 }, 600);
@@ -946,8 +971,13 @@
 
         function renderPhraseBuilderBox() {
             currentBuiltWordsList = [];
-            // Découpage de la phrase en mots étiquettes
-            let words = currentTarget.split(' ');
+            // Insère une espace insécable (\u00A0) devant !?:; et colle le point simple
+            let normalized = currentTarget
+                .replace(/\s*([!?:;])/g, '\u00A0$1')
+                .replace(/\s*([.])/g, '$1');
+
+            // Découpe uniquement sur les espaces standard (conserve l'espace insécable dans l'étiquette)
+            let words = normalized.split(/ +/);
             targetLength = words.length;
             let shuffledWords = [...words].sort(() => Math.random() - 0.5);
 
@@ -989,7 +1019,12 @@
         function checkBuiltPhrase() {
             const msg = document.getElementById('feedback-msg');
             const constructed = currentBuiltWordsList.join(' ');
-            if (constructed.trim() === currentTarget.trim()) {
+            const expected = currentTarget
+                .replace(/\s*([!?:;])/g, '\u00A0$1')
+                .replace(/\s*([.])/g, '$1')
+                .trim();
+
+            if (constructed.trim() === expected) {
                 msg.textContent = "✨ 🎉";
                 if (!hasFailedCurrentItem) correctCount++;
                 currentItemIndex++;
