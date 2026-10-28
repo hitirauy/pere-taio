@@ -290,6 +290,17 @@
             transition: transform 0.1s;
         }
         .syllable-chip:active, .word-chip:active { transform: scale(0.9); }
+        .syllable-chip.placed, .word-chip.placed {
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+            border-style: solid;
+            background: #ffffff;
+            cursor: pointer;
+        }
+        .syllable-chip.placed:hover, .word-chip.placed:hover {
+            border-color: var(--danger);
+            color: var(--danger);
+            background-color: #fef2f2;
+        }
 
         /* Lettres non étudiées grisées */
         .silent-char {
@@ -1182,9 +1193,8 @@
         let errorsCount = 0;
         let currentTarget = "";
         let currentChoices = [];
-        let currentBuiltWord = "";
-        let currentBuiltWordsList = [];
-        let targetLength = 0;
+        let builderTokens = [];
+        let placedTokens = [];
         let hasFailedCurrentItem = false;
 
         // Pioche sans remise pour éviter les répétitions
@@ -1192,6 +1202,7 @@
 
         let currentPlayingAudio = null;
         let autoPlayTimer = null;
+        let checkBuilderTimer = null;
         const audioPreloadCache = {};
 
         function formatDisplay(text) {
@@ -1333,6 +1344,7 @@
 
         function resetSession() {
             if (autoPlayTimer) clearTimeout(autoPlayTimer);
+            if (checkBuilderTimer) clearTimeout(checkBuilderTimer);
             currentItemIndex = 0;
             correctCount = 0;
             errorsCount = 0;
@@ -1386,6 +1398,7 @@
                 return;
             }
 
+            if (checkBuilderTimer) clearTimeout(checkBuilderTimer);
             hasFailedCurrentItem = false;
             document.getElementById('feedback-msg').textContent = '';
 
@@ -1506,10 +1519,11 @@
         }
 
         function renderWordBuilderBox() {
-            currentBuiltWord = "";
+            if (checkBuilderTimer) clearTimeout(checkBuilderTimer);
+            placedTokens = [];
             let letters = currentTarget.split('');
-            targetLength = letters.length;
-            let shuffledLetters = [...letters].sort(() => Math.random() - 0.5);
+            builderTokens = letters.map((l, idx) => ({ id: idx, val: l, placed: false }))
+                                   .sort(() => Math.random() - 0.5);
 
             const box = document.getElementById('exercise-box');
             box.innerHTML = `
@@ -1519,36 +1533,83 @@
             `;
             document.getElementById('audio-play-btn').addEventListener('click', () => playAudio(currentTarget));
 
-            const chipsContainer = document.getElementById('chips-container');
-            shuffledLetters.forEach(l => {
+            updateBuilderSlots(false);
+            updateBottomChips(false);
+        }
+
+        function updateBuilderSlots(isPhrase) {
+            const slot = document.getElementById('slot-container');
+            if (!slot) return;
+            slot.innerHTML = '';
+            
+            placedTokens.forEach(token => {
                 const chip = document.createElement('button');
-                chip.className = 'syllable-chip';
-                chip.textContent = l;
-                chip.addEventListener('click', () => selectLetterChip(chip, l));
+                chip.className = isPhrase ? 'word-chip placed' : 'syllable-chip placed';
+                if (isPhrase) {
+                    chip.innerHTML = formatDisplay(token.val);
+                } else {
+                    chip.textContent = token.val;
+                }
+                chip.title = "Cliquer pour retirer";
+                chip.addEventListener('click', () => {
+                    if (checkBuilderTimer) clearTimeout(checkBuilderTimer);
+                    token.placed = false;
+                    placedTokens = placedTokens.filter(t => t.id !== token.id);
+                    updateBuilderSlots(isPhrase);
+                    updateBottomChips(isPhrase);
+                });
+                slot.appendChild(chip);
+            });
+        }
+
+        function updateBottomChips(isPhrase) {
+            const chipsContainer = document.getElementById('chips-container');
+            if (!chipsContainer) return;
+            chipsContainer.innerHTML = '';
+
+            builderTokens.forEach(token => {
+                const chip = document.createElement('button');
+                chip.className = isPhrase ? 'word-chip' : 'syllable-chip';
+                if (isPhrase) {
+                    chip.innerHTML = formatDisplay(token.val);
+                } else {
+                    chip.textContent = token.val;
+                }
+                if (token.placed) {
+                    chip.style.display = 'none';
+                } else {
+                    chip.addEventListener('click', () => {
+                        token.placed = true;
+                        placedTokens.push(token);
+                        updateBuilderSlots(isPhrase);
+                        updateBottomChips(isPhrase);
+
+                        if (placedTokens.length === builderTokens.length) {
+                            if (isPhrase) {
+                                checkBuiltPhraseDelayed();
+                            } else {
+                                checkBuiltWordDelayed();
+                            }
+                        }
+                    });
+                }
                 chipsContainer.appendChild(chip);
             });
         }
 
-        function selectLetterChip(element, letter) {
-            currentBuiltWord += letter;
-            element.style.display = 'none';
-
-            const slot = document.getElementById('slot-container');
-            slot.textContent = currentBuiltWord;
-
-            if (currentBuiltWord.length === targetLength) {
-                slot.innerHTML = `<div class="unified-word-display">${currentBuiltWord}</div>`;
-                document.querySelectorAll('.syllable-chip').forEach(c => c.style.pointerEvents = 'none');
-                
-                setTimeout(() => {
-                    checkBuiltWord();
-                }, 600);
-            }
+        function checkBuiltWordDelayed() {
+            const constructed = placedTokens.map(t => t.val).join('');
+            if (checkBuilderTimer) clearTimeout(checkBuilderTimer);
+            checkBuilderTimer = setTimeout(() => {
+                checkBuiltWord(constructed);
+            }, 500);
         }
 
-        function checkBuiltWord() {
+        function checkBuiltWord(constructed) {
             const msg = document.getElementById('feedback-msg');
-            if (currentBuiltWord.trim() === currentTarget.trim()) {
+            const slot = document.getElementById('slot-container');
+            if (constructed.trim() === currentTarget.trim()) {
+                if (slot) slot.innerHTML = `<div class="unified-word-display">${constructed}</div>`;
                 msg.textContent = "✨ 🎉";
                 if (!hasFailedCurrentItem) correctCount++;
                 currentItemIndex++;
@@ -1566,14 +1627,15 @@
         }
 
         function renderPhraseBuilderBox() {
-            currentBuiltWordsList = [];
+            if (checkBuilderTimer) clearTimeout(checkBuilderTimer);
+            placedTokens = [];
             let normalized = currentTarget
                 .replace(/\s*([!?:;])/g, '\u00A0$1')
                 .replace(/\s*([.])/g, '$1');
 
             let words = normalized.split(/ +/);
-            targetLength = words.length;
-            let shuffledWords = [...words].sort(() => Math.random() - 0.5);
+            builderTokens = words.map((w, idx) => ({ id: idx, val: w, placed: false }))
+                                 .sort(() => Math.random() - 0.5);
 
             const box = document.getElementById('exercise-box');
             box.innerHTML = `
@@ -1583,42 +1645,28 @@
             `;
             document.getElementById('audio-play-btn').addEventListener('click', () => playAudio(currentTarget));
 
-            const chipsContainer = document.getElementById('chips-container');
-            shuffledWords.forEach(w => {
-                const chip = document.createElement('button');
-                chip.className = 'word-chip';
-                chip.innerHTML = formatDisplay(w);
-                chip.addEventListener('click', () => selectWordChip(chip, w));
-                chipsContainer.appendChild(chip);
-            });
+            updateBuilderSlots(true);
+            updateBottomChips(true);
         }
 
-        function selectWordChip(element, word) {
-            currentBuiltWordsList.push(word);
-            element.style.display = 'none';
-
-            const slot = document.getElementById('slot-container');
-            slot.innerHTML = currentBuiltWordsList.map(w => `<span>${formatDisplay(w)}</span>`).join(' ');
-
-            if (currentBuiltWordsList.length === targetLength) {
-                slot.innerHTML = `<div class="unified-word-display">${formatDisplay(currentBuiltWordsList.join(' '))}</div>`;
-                document.querySelectorAll('.word-chip').forEach(c => c.style.pointerEvents = 'none');
-
-                setTimeout(() => {
-                    checkBuiltPhrase();
-                }, 600);
-            }
+        function checkBuiltPhraseDelayed() {
+            if (checkBuilderTimer) clearTimeout(checkBuilderTimer);
+            checkBuilderTimer = setTimeout(() => {
+                checkBuiltPhrase();
+            }, 500);
         }
 
         function checkBuiltPhrase() {
             const msg = document.getElementById('feedback-msg');
-            const constructed = currentBuiltWordsList.join(' ');
+            const slot = document.getElementById('slot-container');
+            const constructed = placedTokens.map(t => t.val).join(' ');
             const expected = currentTarget
                 .replace(/\s*([!?:;])/g, '\u00A0$1')
                 .replace(/\s*([.])/g, '$1')
                 .trim();
 
             if (constructed.trim() === expected) {
+                if (slot) slot.innerHTML = `<div class="unified-word-display">${formatDisplay(constructed)}</div>`;
                 msg.textContent = "✨ 🎉";
                 if (!hasFailedCurrentItem) correctCount++;
                 currentItemIndex++;
@@ -1637,6 +1685,7 @@
 
         function renderFinalScore() {
             if (autoPlayTimer) clearTimeout(autoPlayTimer);
+            if (checkBuilderTimer) clearTimeout(checkBuilderTimer);
             const ratio = correctCount / totalItems;
             let starsHtml = "";
             let showMedal = false;
