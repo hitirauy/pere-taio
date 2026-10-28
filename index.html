@@ -394,14 +394,62 @@
                 syllabes: ["a", "e", "i", "o", "u", "au", "ea", "ao"], 
                 mots: ["au", "ea", "ao", "oe", "ua", "ui"],
                 phrases: [
-                    "E ao.",
-                    "E ua.",
-                    "E au.",
-                    "E ui.",
-                    "[']Ua ao.",
-                    "[']Ua ua.",
-                    "[']Ua au.",
-                    "[']Ua ui."
+                    {
+                        text: "E ao.",
+                        traps: [
+                            "E au.",
+                            "[']Ua ao."
+                        ]
+                    },
+                    {
+                        text: "E ua.",
+                        traps: [
+                            "E ui.",
+                            "[']Ua ua."
+                        ]
+                    },
+                    {
+                        text: "E au.",
+                        traps: [
+                            "E ao.",
+                            "[']Ua au."
+                        ]
+                    },
+                    {
+                        text: "E ui.",
+                        traps: [
+                            "E ua.",
+                            "[']Ua ui."
+                        ]
+                    },
+                    {
+                        text: "[']Ua ao.",
+                        traps: [
+                            "[']Ua au.",
+                            "E ao."
+                        ]
+                    },
+                    {
+                        text: "[']Ua ua.",
+                        traps: [
+                            "[']Ua ui.",
+                            "E ua."
+                        ]
+                    },
+                    {
+                        text: "[']Ua au.",
+                        traps: [
+                            "[']Ua ao.",
+                            "E au."
+                        ]
+                    },
+                    {
+                        text: "[']Ua ui.",
+                        traps: [
+                            "[']Ua ua.",
+                            "E ui."
+                        ]
+                    }
                 ],
                 oppositions: [
                     { target: "o", pair: ["o", "u"] },
@@ -417,14 +465,62 @@
                 syllabes: ["fa", "fe", "fi"], 
                 mots: ["fai", "fao", "fefe", "feo", "fifi", "fiu", "ofa", "ufa", "ufi"],
                 phrases: [
-                    "E fai.",
-                    "E ufi.",
-                    "E feo.",
-                    "E fifi.",
-                    "E fao.",
-                    "[']Ua fiu.",
-                    "[']Ua fefe.",
-                    "[']Ua fifi."
+                    {
+                        text: "E fai.",
+                        traps: [
+                            "E fao.",
+                            "E feo."
+                        ]
+                    },
+                    {
+                        text: "E ufi.",
+                        traps: [
+                            "E ufa.",
+                            "E fai."
+                        ]
+                    },
+                    {
+                        text: "E feo.",
+                        traps: [
+                            "E fao.",
+                            "E fai."
+                        ]
+                    },
+                    {
+                        text: "E fifi.",
+                        traps: [
+                            "E fefe.",
+                            "[']Ua fifi."
+                        ]
+                    },
+                    {
+                        text: "E fao.",
+                        traps: [
+                            "E fai.",
+                            "E feo."
+                        ]
+                    },
+                    {
+                        text: "[']Ua fiu.",
+                        traps: [
+                            "[']Ua fifi.",
+                            "[']Ua fefe."
+                        ]
+                    },
+                    {
+                        text: "[']Ua fefe.",
+                        traps: [
+                            "E fifi.",
+                            "[']Ua fifi."
+                        ]
+                    },
+                    {
+                        text: "[']Ua fifi.",
+                        traps: [
+                            "[']Ua fiu.",
+                            "E fifi."
+                        ]
+                    }
                 ],
                 oppositions: null
             },
@@ -433,14 +529,62 @@
                 syllabes: ["ā", "ē", "ī", "ō", "ū", "fā", "fē", "fī"], 
                 mots: ["ā", "fā", "fāfā", "fē", "fēfē", "feiā", "ō", "ū"],
                 phrases: [
-                    "E fāfā.",
-                    "E fēfē.",
-                    "E feiā.",
-                    "E fā.",
-                    "E fē.",
-                    "[']Ua fā mai.",
-                    "[']Ua ō.",
-                    "[']Ua ū."
+                    {
+                        text: "E fāfā.",
+                        traps: [
+                            "E fēfē.",
+                            "E fā."
+                        ]
+                    },
+                    {
+                        text: "E fēfē.",
+                        traps: [
+                            "E fāfā.",
+                            "E fē."
+                        ]
+                    },
+                    {
+                        text: "E feiā.",
+                        traps: [
+                            "E fai.",
+                            "E fēfē."
+                        ]
+                    },
+                    {
+                        text: "E fā.",
+                        traps: [
+                            "E fao.",
+                            "E fē."
+                        ]
+                    },
+                    {
+                        text: "E fē.",
+                        traps: [
+                            "E fēfē.",
+                            "E feo."
+                        ]
+                    },
+                    {
+                        text: "[']Ua fā.",
+                        traps: [
+                            "[']Ua fiu.",
+                            "[']Ua fē."
+                        ]
+                    },
+                    {
+                        text: "[']Ua ō.",
+                        traps: [
+                            "[']Ua ā.",
+                            "[']Ua ū."
+                        ]
+                    },
+                    {
+                        text: "[']Ua ū.",
+                        traps: [
+                            "[']Ua ā.",
+                            "[']Ua ō."
+                        ]
+                    }
                 ],
                 oppositions: [
                     { target: "ā", pair: ["a", "ā"] },
@@ -464,14 +608,62 @@
                 syllabes: ["ma", "me", "mi", "mo", "mu", "mā", "mē", "mī", "mō", "mū"], 
                 mots: ["ama", "amo", "mā", "maemae", "māio", "mama", "māmā", "mana", "mau", "mē", "mimi", "mīmī", "moa", "moe", "moemoeā", "moi", "mua", "ume", "umu"],
                 phrases: [
-                    "E mea māmā.",
-                    "E mea fiu.",
-                    "E moa ufa.",
-                    "E mīmī ufa.",
-                    "E mea fefe.",
-                    "[']Ua maemae.",
-                    "[']Ua moe.",
-                    "[']Ua mau."
+                    {
+                        text: "E mea māmā.",
+                        traps: [
+                            "E mea fefe.",
+                            "E moa māmā."
+                        ]
+                    },
+                    {
+                        text: "E mea fiu.",
+                        traps: [
+                            "E mea fefe.",
+                            "E mea māmā."
+                        ]
+                    },
+                    {
+                        text: "E moa ufa.",
+                        traps: [
+                            "E mīmī ufa.",
+                            "E mea fefe."
+                        ]
+                    },
+                    {
+                        text: "E mīmī ufa.",
+                        traps: [
+                            "E moa ufa.",
+                            "E mīmī mā."
+                        ]
+                    },
+                    {
+                        text: "E mea fefe.",
+                        traps: [
+                            "E mea fiu.",
+                            "E mea maemae."
+                        ]
+                    },
+                    {
+                        text: "[']Ua maemae.",
+                        traps: [
+                            "[']Ua moe.",
+                            "[']Ua mau."
+                        ]
+                    },
+                    {
+                        text: "[']Ua moe.",
+                        traps: [
+                            "[']Ua mau.",
+                            "[']Ua fiu."
+                        ]
+                    },
+                    {
+                        text: "[']Ua mau.",
+                        traps: [
+                            "[']Ua moe.",
+                            "[']Ua maemae."
+                        ]
+                    }
                 ],
                 oppositions: null
             },
@@ -480,14 +672,62 @@
                 syllabes: ["ra", "re", "ri", "ro", "ru", "rā", "rē", "rī", "rō", "rū"], 
                 mots: ["ara", "fara", "fare", "marō", "meri", "miro", "ori", "rari", "rē", "remu", "reo", "rere", "rima", "rō", "roi", "rouru", "rū", "rua", "uira"],
                 phrases: [
-                    "E rere rāua.",
-                    "[']Ua rere rāua.",
-                    "E moe rāua iō Maima.",
-                    "[']Ua moe rāua iō Moea.",
-                    "[']Ua ara rāua iō Miri mā.",
-                    "[']Ua rū rāua.",
-                    "E mea marō roa.",
-                    "E mea rari roa."
+                    {
+                        text: "E rere rāua.",
+                        traps: [
+                            "E moe rāua.",
+                            "E rū rāua."
+                        ]
+                    },
+                    {
+                        text: "[']Ua rere rāua.",
+                        traps: [
+                            "[']Ua moe rāua.",
+                            "[']Ua ara rāua."
+                        ]
+                    },
+                    {
+                        text: "E moe rāua iō Maima.",
+                        traps: [
+                            "E moe rāua iō Moea.",
+                            "E ara rāua iō Maima."
+                        ]
+                    },
+                    {
+                        text: "[']Ua moe rāua iō Moea.",
+                        traps: [
+                            "[']Ua moe rāua iō Miri.",
+                            "[']Ua ara rāua iō Moea."
+                        ]
+                    },
+                    {
+                        text: "[']Ua ara rāua iō Miri mā.",
+                        traps: [
+                            "[']Ua ara rāua iō Maima mā.",
+                            "[']Ua moe rāua iō Miri mā."
+                        ]
+                    },
+                    {
+                        text: "[']Ua rū rāua.",
+                        traps: [
+                            "[']Ua rere rāua.",
+                            "[']Ua rē rāua."
+                        ]
+                    },
+                    {
+                        text: "E mea marō roa.",
+                        traps: [
+                            "E mea rari roa.",
+                            "E mea māmā roa."
+                        ]
+                    },
+                    {
+                        text: "E mea rari roa.",
+                        traps: [
+                            "E mea marō roa.",
+                            "E mea maemae roa."
+                        ]
+                    }
                 ],
                 oppositions: null
             },
@@ -496,14 +736,62 @@
                 syllabes: ["na", "ne", "ni", "no", "nu", "nā", "nē", "nī", "nō", "nū"], 
                 mots: ["ana", "ānuanua", "fana", "inu", "manu", "menemene", "moni", "naero", "nānā", "naonao", "nini", "nira", "niuniu", "nono", "nui", "one", "oni", "ono", "rēni"],
                 phrases: [
-                    "E moe nā mīmī oni.",
-                    "[']Ua ora e ono manu.",
-                    "E naonao menemene roa !",
-                    "[']Ua nānā rāua [']iāna.",
-                    "E ori noa māua.",
-                    "[']Ua moni roa !",
-                    "E fare nui.",
-                    "E ānuanua."
+                    {
+                        text: "E moe nā mīmī oni.",
+                        traps: [
+                            "E moe nā mīmī ufa.",
+                            "E ara nā mīmī oni."
+                        ]
+                    },
+                    {
+                        text: "[']Ua ora e ono manu.",
+                        traps: [
+                            "[']Ua ora e rima manu.",
+                            "[']Ua moe e ono manu."
+                        ]
+                    },
+                    {
+                        text: "E naonao menemene roa !",
+                        traps: [
+                            "E nono menemene roa !",
+                            "E naonao maemae roa !"
+                        ]
+                    },
+                    {
+                        text: "[']Ua nānā rāua [']iāna.",
+                        traps: [
+                            "[']Ua nānā māua [']iāna.",
+                            "[']Ua fāfā rāua [']iāna."
+                        ]
+                    },
+                    {
+                        text: "E ori noa māua.",
+                        traps: [
+                            "E ori noa rāua.",
+                            "E rere noa māua."
+                        ]
+                    },
+                    {
+                        text: "[']Ua moni roa !",
+                        traps: [
+                            "[']Ua marō roa !",
+                            "[']Ua fiu roa !"
+                        ]
+                    },
+                    {
+                        text: "E fare nui.",
+                        traps: [
+                            "E fare maemae.",
+                            "E miro nui."
+                        ]
+                    },
+                    {
+                        text: "E ānuanua.",
+                        traps: [
+                            "E naonao.",
+                            "E niuniu."
+                        ]
+                    }
                 ],
                 oppositions: [
                     { target: "na", pair: ["ma", "na"] },
@@ -523,14 +811,62 @@
                 syllabes: ["va", "ve", "vi", "vo", "vā", "vē", "vī", "vō"], 
                 mots: ["fīva", "iva", "rava", "reva", "vai", "vana", "varo", "vau", "vāvā", "vāvāhi", "veoveo", "veravera", "veri", "vero", "vī", "vine", "vini", "vīvī", "vivo"],
                 phrases: [
-                    "[']Ua reva vau.",
-                    "E moe māua iō Eva mā.",
-                    "[']Ua rere e iva vini.",
-                    "E mea rava roa.",
-                    "E vai veravera roa !",
-                    "E vero uira !",
-                    "E iva vīvī.",
-                    "E mea varavara roa."
+                    {
+                        text: "[']Ua reva vau.",
+                        traps: [
+                            "[']Ua rere vau.",
+                            "[']Ua reva rāua."
+                        ]
+                    },
+                    {
+                        text: "E moe māua iō Eva mā.",
+                        traps: [
+                            "E moe rāua iō Eva mā.",
+                            "E moe māua iō Miri mā."
+                        ]
+                    },
+                    {
+                        text: "[']Ua rere e iva vini.",
+                        traps: [
+                            "[']Ua rere e ono vini.",
+                            "[']Ua rere e iva manu."
+                        ]
+                    },
+                    {
+                        text: "E mea rava roa.",
+                        traps: [
+                            "E mea rava mau.",
+                            "E mea marō roa."
+                        ]
+                    },
+                    {
+                        text: "E vai veravera roa !",
+                        traps: [
+                            "E vai nīnamu roa !",
+                            "E rēni veravera roa !"
+                        ]
+                    },
+                    {
+                        text: "E vero uira !",
+                        traps: [
+                            "E vero nui !",
+                            "E vari uira !"
+                        ]
+                    },
+                    {
+                        text: "E iva vīvī.",
+                        traps: [
+                            "E ono vīvī.",
+                            "E iva mīmī."
+                        ]
+                    },
+                    {
+                        text: "E mea varavara roa.",
+                        traps: [
+                            "E mea rari roa.",
+                            "E mea varavara noa."
+                        ]
+                    }
                 ],
                 oppositions: [
                     { target: "va", pair: ["fa", "va"] },
@@ -548,14 +884,62 @@
                 syllabes: ["ha", "he", "hi", "ho", "hu", "hā", "hē", "hī", "hō", "hū"], 
                 mots: ["hāmani", "haru", "hē", "heiva", "here", "hīmene", "hinu", "hoe", "honu", "horo", "huero", "hura", "huruhuru", "maha", "mahae", "mahana", "rehu", "rohirohi", "vaha"],
                 phrases: [
-                    "[']Ua rohirohi roa vau.",
-                    "E hīmene rāua iō Hinanui mā.",
-                    "E hoe māua i Māhina.",
-                    "[']Ua horo e maha mīmī.",
-                    "[']Ua ruhiruhiā roa nā vahine.",
-                    "[']Ua fāura mai nā honu e maha.",
-                    "E Heiva nui i Huahine.",
-                    "E mahana veravera roa !"
+                    {
+                        text: "[']Ua rohirohi roa vau.",
+                        traps: [
+                            "[']Ua ruhiruhiā roa vau.",
+                            "[']Ua rohirohi roa rāua."
+                        ]
+                    },
+                    {
+                        text: "E hīmene rāua iō Hinanui mā.",
+                        traps: [
+                            "E hīmene māua iō Hinanui mā.",
+                            "E hīmene rāua iō Miri mā."
+                        ]
+                    },
+                    {
+                        text: "E hoe māua i Māhina.",
+                        traps: [
+                            "E horo māua i Māhina.",
+                            "E hoe rāua i Māhina."
+                        ]
+                    },
+                    {
+                        text: "[']Ua horo e maha mīmī.",
+                        traps: [
+                            "[']Ua horo e ono mīmī.",
+                            "[']Ua horo e maha moa."
+                        ]
+                    },
+                    {
+                        text: "[']Ua ruhiruhiā roa nā vahine.",
+                        traps: [
+                            "[']Ua rohirohi roa nā vahine.",
+                            "[']Ua ruhiruhiā roa nā māmā."
+                        ]
+                    },
+                    {
+                        text: "[']Ua fāura mai nā honu e maha.",
+                        traps: [
+                            "[']Ua fāura mai nā honu e ono.",
+                            "[']Ua reva mai nā honu e maha."
+                        ]
+                    },
+                    {
+                        text: "E Heiva nui i Huahine.",
+                        traps: [
+                            "E Heiva nui i Māhina.",
+                            "E fare nui i Huahine."
+                        ]
+                    },
+                    {
+                        text: "E mahana veravera roa !",
+                        traps: [
+                            "E vai veravera roa !",
+                            "E mahana marō roa !"
+                        ]
+                    }
                 ],
                 oppositions: [
                     { target: "ha", pair: ["a", "ha"] },
@@ -574,7 +958,64 @@
                 id: 9, name: "9 : 'eta", color: "#059669", pastel: "#ecfdf5", 
                 syllabes: ["'a", "'e", "'i", "'o", "'u", "'ā", "'ē", "'ī", "'ō", "'ū"], 
                 mots: ["'amu", "'are", "'āva'e", "'āvae", "'ere'ere", "'iri", "'ōfī", "'ori", "'uo'uo", "'ūrī", "fe'e", "i'a", "mā'a", "ma'i", "mo'o", "ra'i", "re'are'a", "ro'i", "va'a"],
-                phrases: null,
+                phrases: [
+                    {
+                        text: "'A 'ori 'e 'a hīmene !",
+                        traps: [
+                            "'A ori 'e 'a hīmene !",
+                            "'A 'ori 'e 'a hoe !"
+                        ]
+                    },
+                    {
+                        text: "'A fa'a'amu i nā 'ūrī e va'u !",
+                        traps: [
+                            "'A fa'a'amu i nā 'ūrī e ono !",
+                            "'A fa'a'amu i nā mīmī e va'u !"
+                        ]
+                    },
+                    {
+                        text: "'Ua 'amu 'oia 'e 'ua inu.",
+                        traps: [
+                            "'Ua 'amu 'ōna 'e 'ua inu.",
+                            "'Ua 'amu 'oia 'e 'ua ora."
+                        ]
+                    },
+                    {
+                        text: "'Ua inu 'ōna 'e 'ua rava'i.",
+                        traps: [
+                            "'Ua inu 'oia 'e 'ua rava'i.",
+                            "'Ua inu 'ōna 'e 'ua reva."
+                        ]
+                    },
+                    {
+                        text: "E mea 'aravihi roa 'oe.",
+                        traps: [
+                            "E mea 'aravihi roa 'oia.",
+                            "E mea rohirohi roa 'oe."
+                        ]
+                    },
+                    {
+                        text: "'Ua fa'aora 'o Raihau iāna.",
+                        traps: [
+                            "'Ua fa'a'amu 'o Raihau iāna.",
+                            "'Ua fa'aora 'o Hinanui iāna."
+                        ]
+                    },
+                    {
+                        text: "E va'u fe'e 'uo'uo !",
+                        traps: [
+                            "E ono fe'e 'uo'uo !",
+                            "E va'u fe'e 'ere'ere !"
+                        ]
+                    },
+                    {
+                        text: "E fa'aea 'ōrua iō Namure mā.",
+                        traps: [
+                            "E fa'aea rāua iō Namure mā.",
+                            "E fa'aea 'ōrua iō Moea mā."
+                        ]
+                    }
+                ],
                 oppositions: [
                     { target: "'a", pair: ["a", "'a"] },
                     { target: "a",  pair: ["a", "'a"] },
@@ -596,14 +1037,128 @@
                 id: 10, name: "10 : p", color: "#65a30d", pastel: "#f7fee7", 
                 syllabes: ["pa", "pe", "pi", "po", "pu", "pā", "pē", "pī", "pō", "pū"], 
                 mots: ["pāfa'i", "pahi", "pahu", "pārahi", "pāreu", "pāruru", "pē", "pepe", "pēpē", "pere'o'o", "pī", "pīahi", "piha", "pō", "pōiri", "pū", "pu'a", "pua", "pua'a"],
-                phrases: null,
+                phrases: [
+                    {
+                        text: "'A pārahi i raro !",
+                        traps: [
+                            "'A horo i raro !",
+                            "'A pārahi i ni'a !"
+                        ]
+                    },
+                    {
+                        text: "E pere'o'o 'āpī roa !",
+                        traps: [
+                            "E pere'o'o rahi roa !",
+                            "E pahi 'āpī roa !"
+                        ]
+                    },
+                    {
+                        text: "'Ua pōiri roa.",
+                        traps: [
+                            "'Ua pō roa.",
+                            "'Ua pōiri ri'i."
+                        ]
+                    },
+                    {
+                        text: "'Ua pēpē ānei 'ōna ?",
+                        traps: [
+                            "'Ua pepe ānei 'ōna ?",
+                            "'Ua pēpē ānei 'oe ?"
+                        ]
+                    },
+                    {
+                        text: "'Ua rere nā pepe e pae !",
+                        traps: [
+                            "'Ua rere nā pēpē e pae !",
+                            "'Ua horo nā pepe e pae !"
+                        ]
+                    },
+                    {
+                        text: "'Ua horo e pae pua'a.",
+                        traps: [
+                            "'Ua horo e maha pua'a.",
+                            "'Ua horo e pae 'ūrī."
+                        ]
+                    },
+                    {
+                        text: "E ho'o mai 'oe e pae pāreu.",
+                        traps: [
+                            "E ho'o mai 'oia e pae pāreu.",
+                            "E ho'o mai 'oe e maha pāreu."
+                        ]
+                    },
+                    {
+                        text: "E pae pahi rahi i Papeari.",
+                        traps: [
+                            "E pae pahi 'āpī i Papeari.",
+                            "E maha pahi rahi i Papeari."
+                        ]
+                    }
+                ],
                 oppositions: null
             },
             { 
                 id: 11, name: "11 : t", color: "#0891b2", pastel: "#ecfeff", 
                 syllabes: ["ta", "te", "ti", "to", "tu", "tā", "tē", "tī", "tō", "tū"], 
                 mots: ["fa'atete", "mata", "mata'i", "poto", "ta'i", "ta'oto", "tamari'i", "tāpū", "tari'a", "taura", "tīfaifai", "tiare", "tipi", "tōtara", "tu'a", "tu'e", "tua", "tumu rā'au", "tupa"],
-                phrases: null,
+                phrases: [
+                    {
+                        text: "Tē ta'oto nei te tamari'i.",
+                        traps: [
+                            "Tē hīmene nei te tamari'i.",
+                            "Tē ta'oto ra te tamari'i."
+                        ]
+                    },
+                    {
+                        text: "E tiare no'ano'a mau teie !",
+                        traps: [
+                            "E tiare no'ano'a roa teie !",
+                            "E tiare no'ano'a mau terā !"
+                        ]
+                    },
+                    {
+                        text: "'A rave i te tipi 'e 'a tāpū i te taura !",
+                        traps: [
+                            "'A rave i te taura 'e 'a tāpū i te tipi !",
+                            "'A rave i te tipi 'e 'a tāpū i te rā'au !"
+                        ]
+                    },
+                    {
+                        text: "Tē horo ra e toru tupa i tātahi.",
+                        traps: [
+                            "Tē horo nei e toru tupa i tātahi.",
+                            "Tē horo ra e maha tupa i tātahi."
+                        ]
+                    },
+                    {
+                        text: "E mea poto roa te taura.",
+                        traps: [
+                            "E mea rahi roa te taura.",
+                            "E mea poto roa te pahi."
+                        ]
+                    },
+                    {
+                        text: "E tīfaifai nehenehe roa tenā !",
+                        traps: [
+                            "E tīfaifai nehenehe roa terā !",
+                            "E pāreu nehenehe roa tenā !"
+                        ]
+                    },
+                    {
+                        text: "E tumu rā'au rahi roa terā.",
+                        traps: [
+                            "E tumu rā'au poto roa terā.",
+                            "E tumu rā'au rahi roa teie."
+                        ]
+                    },
+                    {
+                        text: "'Ua pēpē te tamari'i 'e 'ua ta'i 'ōna.",
+                        traps: [
+                            "'Ua pēpē te tamari'i 'e 'ua ori 'ōna.",
+                            "'Ua ora te tamari'i 'e 'ua ta'i 'ōna."
+                        ]
+                    }
+                ],
                 oppositions: [
                     { target: "pa", pair: ["pa", "ta"] },
                     { target: "ta", pair: ["pa", "ta"] },
@@ -636,11 +1191,14 @@
         let sessionDeck = [];
 
         let currentPlayingAudio = null;
+        let autoPlayTimer = null;
         const audioPreloadCache = {};
 
         function formatDisplay(text) {
             let res = text.replace(/\[(.*?)\]/g, '<span class="silent-char">$1</span>');
-            // Garantit une espace insécable parfaite devant la ponctuation haute
+            // Grise automatiquement le 'eta muet de 'Ua / 'ua si non balisé
+            res = res.replace(/(^|[\s\u00A0])(['’ʻ])([Uu]a\b)/g, '$1<span class="silent-char">$2</span>$3');
+            // Espace insécable parfaite devant la ponctuation haute
             return res.replace(/[\s\u00A0]*([!?:;])/g, '&nbsp;$1');
         }
 
@@ -659,10 +1217,11 @@
 
         function preloadCurrentChapterAudio() {
             const chap = chapters[currentChapterIndex];
+            const phrasesList = (chap.phrases || []).map(p => p.text || p);
             const allItems = [
                 ...(chap.syllabes || []), 
                 ...(chap.mots || []),
-                ...(chap.phrases || [])
+                ...phrasesList
             ];
             
             if (chap.oppositions) {
@@ -760,16 +1319,20 @@
                 const b = document.getElementById(`btn-step-${i}`);
                 if (b) b.classList.toggle('active', i === step);
             }
-            
-            if (step === 1 || step === 3) totalItems = 20;
-            else if (step === 2 || step === 4 || step === 7) totalItems = 10;
-            else if (step === 5 || step === 6) totalItems = 5;
+
+            // 20 items pour la lecture rapide et les oppositions
+            if (step === 1 || step === 3 || step === 7) totalItems = 20;
+            // 10 items pour les exercices d'écriture et la lecture de phrases
+            else if (step === 2 || step === 4 || step === 5) totalItems = 10;
+            // 5 items pour la manipulation des étiquettes de phrases
+            else if (step === 6) totalItems = 5;
 
             resetSession();
             loadNewItem();
         }
 
         function resetSession() {
+            if (autoPlayTimer) clearTimeout(autoPlayTimer);
             currentItemIndex = 0;
             correctCount = 0;
             errorsCount = 0;
@@ -803,7 +1366,7 @@
             return [...new Set(pool)];
         }
 
-        // Pioche sans remise pour garantir une rotation parfaite
+        // Pioche sans remise pour une rotation complète avant répétition
         function drawNextItem() {
             if (sessionDeck.length === 0) {
                 let base = [];
@@ -839,19 +1402,34 @@
                 currentChoices = [currentTarget, ...distractors].sort(() => Math.random() - 0.5);
                 renderReadingBox();
             } else if (currentStep === 5) {
-                currentTarget = drawNextItem();
-                const phrasesList = getDedicatedCorpus();
-                let distractors = phrasesList.filter(p => p !== currentTarget).sort(() => Math.random() - 0.5).slice(0, 2);
-                currentChoices = [currentTarget, ...distractors].sort(() => Math.random() - 0.5);
+                const rawItem = drawNextItem();
+                currentTarget = rawItem.text || rawItem;
+                
+                let choices = [currentTarget];
+                if (rawItem.traps && rawItem.traps.length > 0) {
+                    choices.push(...rawItem.traps);
+                } else {
+                    const phrasesList = getDedicatedCorpus().map(p => p.text || p);
+                    let distractors = phrasesList.filter(p => p !== currentTarget).sort(() => Math.random() - 0.5).slice(0, 2);
+                    choices.push(...distractors);
+                }
+                currentChoices = choices.sort(() => Math.random() - 0.5);
                 renderPhraseReadingBox();
             } else if (currentStep === 6) {
-                currentTarget = drawNextItem();
+                const rawItem = drawNextItem();
+                currentTarget = rawItem.text || rawItem;
                 renderPhraseBuilderBox();
             } else {
                 currentTarget = drawNextItem();
                 renderWordBuilderBox();
             }
             updateStats();
+
+            // Lecture audio automatique pour tous les exercices avec une courte respiration
+            if (autoPlayTimer) clearTimeout(autoPlayTimer);
+            autoPlayTimer = setTimeout(() => {
+                playAudio(currentTarget);
+            }, 280);
         }
 
         function renderReadingBox() {
@@ -989,12 +1567,10 @@
 
         function renderPhraseBuilderBox() {
             currentBuiltWordsList = [];
-            // Insère une espace insécable (\u00A0) devant !?:; et colle le point simple
             let normalized = currentTarget
                 .replace(/\s*([!?:;])/g, '\u00A0$1')
                 .replace(/\s*([.])/g, '$1');
 
-            // Découpe uniquement sur les espaces standard (conserve l'espace insécable dans l'étiquette)
             let words = normalized.split(/ +/);
             targetLength = words.length;
             let shuffledWords = [...words].sort(() => Math.random() - 0.5);
@@ -1060,6 +1636,7 @@
         }
 
         function renderFinalScore() {
+            if (autoPlayTimer) clearTimeout(autoPlayTimer);
             const ratio = correctCount / totalItems;
             let starsHtml = "";
             let showMedal = false;
